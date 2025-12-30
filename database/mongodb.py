@@ -1,7 +1,6 @@
 """
 MongoDB connection và management
 """
-
 from pymongo import MongoClient, DESCENDING
 from pymongo.errors import ConnectionFailure
 from config.settings import settings
