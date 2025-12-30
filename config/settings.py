@@ -2,7 +2,6 @@
 Configuration management
 Quản lý tất cả các biến cấu hình
 """
-
 import os
 import platform
 from dataclasses import dataclass
