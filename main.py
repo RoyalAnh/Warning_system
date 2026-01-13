@@ -1,12 +1,11 @@
 """
-Backend Entry Point
+main.py - Backend Entry Point
 Khởi động CoAP server và HTTP API server
 """
 
 import sys
 import os
 
-# Thêm thư mục hiện tại vào Python path để import được các module
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import asyncio
@@ -14,7 +13,7 @@ import threading
 from config.settings import settings
 from database.mongodb import init_database
 from servers.coap_server import start_coap_server
-from servers.http_server import start_http_server
+from servers.http_server_swagger import start_http_server  
 from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -43,7 +42,8 @@ def main():
     
     # 3. Khởi động HTTP API server (blocking)
     logger.info(f"Starting HTTP API server on port {settings.HTTP_PORT}...")
-    logger.info(f"API available at: http://{settings.HOST}:{settings.HTTP_PORT}")
+    logger.info(f"Swagger UI: http://localhost:{settings.HTTP_PORT}/docs")
+    logger.info(f"API Base: http://{settings.HOST}:{settings.HTTP_PORT}")
     logger.info("=" * 60)
     
     try:
