@@ -11,8 +11,9 @@ RUN apt-get update && apt-get install -y \
 # Create new user but not switching to it yet
 RUN useradd -m appuser
 COPY . /home/appuser/warning_system
+RUN chown -R appuser:appuser /home/appuser/
+USER appuser
 WORKDIR /home/appuser/warning_system
-RUN chown -R appuser:appuser /home/appuser/warning_system
 RUN chmod +x entrypoint.sh
 RUN python3 -m venv .venv
 RUN /bin/bash -c "source .venv/bin/activate \
@@ -20,5 +21,5 @@ RUN /bin/bash -c "source .venv/bin/activate \
         pip install -r requirements.txt"
 
 # Switch to non-root user
-USER appuser
-ENTRYPOINT [ "entrypoint.sh" ]
+RUN ls
+ENTRYPOINT [ "./entrypoint.sh" ]
