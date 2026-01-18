@@ -22,7 +22,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
-    image: logm250/warning_system_backend:latest
+    image: logm250/warning_system_backend:dev
     container_name: warning_system_backend
     restart: unless-stopped
     environment:
