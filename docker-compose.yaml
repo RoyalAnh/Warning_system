@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: warning_system_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: landslide_monitor
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - warning_system_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: warning_system_backend
+    restart: unless-stopped
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - MONGODB_DB=landslide_monitor
+      - HOST=0.0.0.0
+      - COAP_PORT=5683
+      - HTTP_PORT=80
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    ports:
+      - "3000:80"  # HTTP API
+      - "5683:5683/udp"  # CoAP
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - warning_system_network
+    volumes:
+      - ./logs:/home/appuser/warning_system/logs
+
+networks:
+  warning_system_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
