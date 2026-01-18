@@ -1,4 +1,4 @@
-from ubuntu:jammy
+FROM ubuntu:jammy
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
