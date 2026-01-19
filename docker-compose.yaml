@@ -3,15 +3,12 @@ services:
     image: mongo:7.0
     container_name: warning_system_mongodb
     restart: unless-stopped
+    network_mode: host
     environment:
       MONGO_INITDB_DATABASE: landslide_monitor
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
-    networks:
-      - warning_system_network
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -25,28 +22,22 @@ services:
     image: logm250/warning_system_backend:dev
     container_name: warning_system_backend
     restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_BIND_SERVICE
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/
+      - MONGODB_URI=mongodb://localhost:27017/
       - MONGODB_DB=landslide_monitor
       - HOST=0.0.0.0
       - COAP_PORT=5683
-      - HTTP_PORT=80
+      - HTTP_PORT=3000
       - ENVIRONMENT=production
-      - LOG_LEVEL=INFO
-    ports:
-      - "3000:80"  # HTTP API
-      - "5683:5683/udp"  # CoAP
+      - LOG_LEVEL=DEBUG
     depends_on:
       mongodb:
         condition: service_healthy
-    networks:
-      - warning_system_network
     volumes:
       - ./logs:/home/appuser/warning_system/logs
-
-networks:
-  warning_system_network:
-    driver: bridge
 
 volumes:
   mongodb_data:
