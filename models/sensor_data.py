@@ -32,7 +32,7 @@ class SensorReading(BaseModel):
     mag_z: float = Field(0.0, description="La bàn từ trục Z (µT)")
     
     # Tính toán bổ sung
-    tilt_angle: float = Field(0.0, description="Góc nghiêng (độ)")
+    # tilt_angle: float = Field(0.0, description="Góc nghiêng (độ)")
 
 
 class SensorData(BaseModel):
@@ -60,7 +60,7 @@ class SensorData(BaseModel):
                 "gyro_x": self.data.gyro_x,
                 "gyro_y": self.data.gyro_y,
                 "gyro_z": self.data.gyro_z,
-                "tilt_angle": self.data.tilt_angle
+                # "tilt_angle": self.data.tilt_angle
             },
             "severity": self.severity,
             "location": {

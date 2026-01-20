@@ -71,11 +71,11 @@ class DataParser:
             gyro_y=coap_data.gy,
             gyro_z=coap_data.gz,
             # La bàn từ
-            mag_x=coap_data.mx,
-            mag_y=coap_data.my,
-            mag_z=coap_data.mz,
+            # mag_x=coap_data.mx,
+            # mag_y=coap_data.my,
+            # mag_z=coap_data.mz,
             # Góc nghiêng
-            tilt_angle=coap_data.tilt
+            # tilt_angle=coap_data.tilt
         )
         
         # Tạo Location (nếu có)

@@ -30,25 +30,25 @@ class SeverityAnalyzer:
         Returns:
             Severity level: "normal", "warning", "danger", "critical"
         """
-        tilt_angle = abs(sensor_data.data.tilt_angle)
+        # tilt_angle = abs(sensor_data.data.tilt_angle)
         accel_magnitude = SeverityAnalyzer._calculate_accel_magnitude(sensor_data)
         
+        # logger.debug(f"Device {sensor_data.deviceId}: "
+        #             f"tilt={tilt_angle:.2f}°, accel={accel_magnitude:.2f}m/s²")
+
         logger.debug(f"Device {sensor_data.deviceId}: "
-                    f"tilt={tilt_angle:.2f}°, accel={accel_magnitude:.2f}m/s²")
+                    f"accel={accel_magnitude:.2f}m/s²")
         
         # Kiểm tra điều kiện critical
-        if (tilt_angle > settings.THRESHOLD_CRITICAL or 
-            accel_magnitude > settings.ACCEL_CRITICAL):
+        if (accel_magnitude > settings.ACCEL_CRITICAL):
             return "critical"
         
         # Kiểm tra điều kiện danger
-        if (tilt_angle > settings.THRESHOLD_DANGER or 
-            accel_magnitude > settings.ACCEL_DANGER):
+        if (accel_magnitude > settings.ACCEL_DANGER):
             return "danger"
         
         # Kiểm tra điều kiện warning
-        if (tilt_angle > settings.THRESHOLD_WARNING or 
-            accel_magnitude > settings.ACCEL_WARNING):
+        if (accel_magnitude > settings.ACCEL_WARNING):
             return "warning"
         
         # Ngược lại là normal

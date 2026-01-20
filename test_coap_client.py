@@ -14,7 +14,7 @@ async def test_coap_post():
         "deviceId": "TEST_DEVICE",
         "timestamp": "2026-01-19T14:00:00Z",
         "data": {
-            "tilt_angle": 15.5,
+            # "tilt_angle": 15.5,
             "accel_x": 0.1,
             "accel_y": 0.2,
             "accel_z": 9.8

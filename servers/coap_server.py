@@ -49,7 +49,7 @@ class SensorDataResource(resource.Resource):
             logger.info(
                 f"[CoAP] Device={sensor_data.deviceId}, "
                 f"Severity={severity}, "
-                f"Tilt={sensor_data.data.tilt_angle:.2f}°"
+                # f"Tilt={sensor_data.data.tilt_angle:.2f}°"
             )
 
             # Save to MongoDB
